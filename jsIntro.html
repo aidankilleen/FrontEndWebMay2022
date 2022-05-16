@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="heading">JS Intro</h1>
+
+    <button onclick="onClick()">Press Me</button>
+
+    <form action="doSomething.html" onsubmit="return onSubmit()">
+        <input type="text" id="txtName">
+        <input type="submit" value="submit"/>
+    </form>
+
+
+    <button onclick="onAddClick()">Add</button>
+    <div id="demo">
+
+    </div>
+
+    <script>
+        function onAddClick() {
+            var div = document.getElementById("demo");
+            var element = document.createElement("h1");
+            element.innerHTML="Hello";
+            div.append(element);
+        }
+    </script>
+
+
+
+
+
+
+
+
+
+    <script>
+
+        var address;
+
+        document.getElementById("heading").innerHTML = address;
+
+        function setHeading(text) {
+            document.getElementById("heading").innerHTML = text;
+        }
+
+        setHeading("Heading Changed");
+        setHeading();
+
+
+
+
+
+
+
+        var name = "Aidan";
+
+        name = 27;
+
+
+        var list = ["one", 2, 3.3333, [4,4,4,4]];
+
+        for (var i=0; i<list.length; i++) {
+
+            document.write(list[i]);
+        }
+
+
+        document.write("Welcome " + name);
+
+
+        document.write("<h1>JS Generated h1 tag</h1>");
+
+
+    </script>
+    <script>
+
+        console.log("starting...");
+
+
+
+
+        function onSubmit() {
+
+            let txtName = document.getElementById("txtName");
+            if (txtName.value == "") {
+                alert("please fill in the name");
+                return false;
+            }
+            return true;
+        }
+
+
+        //alert("hello");
+
+        function onClick() {
+            alert('you clicked');
+            console.log("you clicked");
+
+            for (let i = 0;i < 5; i++) {
+
+                console.log("message " + i)
+
+
+
+                //thisisnotvalidcode;
+            }
+        }
+
+    </script>
+
+</body>
+</html>

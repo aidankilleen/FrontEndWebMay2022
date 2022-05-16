@@ -1,0 +1,63 @@
+h1 {
+    color: red;
+    font-size: 1.5em;
+}
+
+#mainhead {
+    color: green;
+}
+p {
+    color: green;
+   font-size: 1.5em; 
+}
+
+.box {
+    width: 100px;
+    height: 100px;
+    border: 3px solid black;
+    margin: 10px;
+    padding: 5px;
+}
+.red {
+    background-color: lightcoral;
+}
+.blue {
+    background-color: lightblue;
+}
+.green {
+    background-color: lightgreen;
+}
+
+div h1 {
+    color: blue;
+}
+
+#info h1 {
+    color: orange;
+}
+.infodiv h1 {
+    color: purple;
+}
+.infodiv p {
+    color: red;
+}
+
+.infotable {
+    border: 1px solid black;
+}
+.infotable thead tr {
+    background-color: lightgray;
+}
+
+.infotable tbody td {
+    color: red;
+    text-decoration: underline;
+}
+
+.warning {
+    color: red;
+}
+
+.emphasis {
+    font-weight: bold;
+}
