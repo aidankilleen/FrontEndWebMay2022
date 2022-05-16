@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>JQuery Introduction</h1>
+
+    <input type="button" id="btnTest" value="Add">
+    <div id="output">
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    </script>
+    <script>
+        // $(selector).function(parameters)
+        /*
+        function onClick() {
+            alert("clicked");
+        }
+        $('#btnTest').on("click", onClick);
+        */
+
+        var count = 0;
+        $('#btnTest').on('click', function() {
+
+            //$('#output').append('<h1>Added ' + count++ + '</h1>');
+
+
+            $('#output').append(`<h1>Added ${ count++ }</h1>`);
+
+
+            var a = 10;
+            var b = 20;
+
+            $('#output').append(`<p>${ a } + ${ b } = ${ a + b }</p>`);
+
+
+
+
+            
+
+        });
+
+
+
+
+    </script>
+
+
+
+</body>
+</html>
