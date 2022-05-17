@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="furthercss.css"/>
+
+    <style>
+
+    </style>
+
+</head>
+<body>
+    <h1>Further CSS</h1>
+    <h1 id="header2" class="heading">Style using id</h1>
+    <h1 class="heading">Style using class</h1>
+    <section id="section">
+        <h1>H1 in section</h1>
+    </section>
+
+    <div id="box">
+        Box 1
+    </div>
+
+    <hr>
+    <form class="userForm">
+
+        <input 
+            type="text" 
+            value="Professional Training" 
+            readonly><br/>
+        <input type="text"
+            value="Cork Airport Business Park"/>
+
+
+    </form>
+
+    <hr>
+
+    <section id="checkboxtest">
+
+        <input type="checkbox">
+        <div class="info">
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rem repudiandae blanditiis veritatis, ea officiis reprehenderit, exercitationem pariatur velit inventore cupiditate nihil praesentium doloremque adipisci accusantium beatae hic! Sed, sint consequatur?</p>
+            <p>Aliquam distinctio, deleniti magnam corporis, repellendus eveniet voluptate ad minus molestias a optio incidunt quaerat aliquid. Ratione voluptatibus, nam sit magnam assumenda delectus veniam hic quisquam non esse repellendus incidunt.</p>
+        </div>
+    </section>
+
+
+    <section id="hovertest">
+
+        <h1>Hover Test</h1>
+
+
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quos repellendus ipsa perferendis asperiores tempora debitis, incidunt, aliquam dolorum natus, quasi consectetur? Earum asperiores porro eius quaerat quis animi autem odio.</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit ab deleniti possimus rerum facere, quos exercitationem sed hic officia maiores repellendus perspiciatis nesciunt aperiam doloremque laboriosam fugiat nostrum iusto iste.</p>
+    </section>
+
+
+    <section id="pseudoelementtest">
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sequi blanditiis delectus error quae quia vitae laborum? Officiis aliquam consequuntur voluptatibus beatae quam deserunt fugiat, magni soluta unde labore laborum voluptate.
+    </section>
+
+    <section class="quote">
+        Shallow men believe in luck or in circumstance. Strong men believe in cause and effect
+    </section>
+
+
+
+
+
+
+
+
+    <hr>
+
+
+
+    <input type="button" onclick="onClick()" value="Show message"/>
+
+    <script>
+
+        function onClick() {
+            var divMessage = document.getElementById("message");
+
+            if (divMessage.innerHTML == "") {
+                divMessage.innerHTML = "Warning - this is a message";
+
+            } else {
+                divMessage.innerHTML = "";
+
+            }
+        }
+    </script>
+
+
+    <div id="message"></div>
+
+
+
+    <table class="datatable">
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>one</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>two</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>three</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>four</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>five</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>six</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>seven</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>eight</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>nine</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td>ten</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+
+
+
+</body>
+</html>
