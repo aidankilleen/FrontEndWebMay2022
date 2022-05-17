@@ -97,4 +97,6 @@ h1 {
     content: '"';
 }
 
-.quote:has
+section.quote {
+    color:orange;
+}

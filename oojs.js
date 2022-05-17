@@ -1,10 +1,10 @@
 var user = {
-    id: 1,
-    name: "Alice", 
-    email: "alice@gmail.com", 
-    active: false, 
+    "id": 1,
+    "name": "Alice", 
+    "email": "alice@gmail.com", 
+    "active": false, 
 
-    display: function () {
+    "display": function () {
         console.log(user.name + " " + user.email);
     }
 }

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        #tblUsers {
+            width: 100%;
+            border: 1px solid black;
+        }
+
+        #tblUsers thead tr {
+            background-color: black;
+            color: white;
+        }
+        #tblUsers tbody tr:nth-child(odd) {
+            background-color: lightgray;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Further JS</h1>
+
+    <table id="tblUsers">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Active</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"
+        integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+        </script>
+    <script>
+
+        var users = [
+            { id: 1, name: "Alice", email: "alice@gmail.com", active: true },
+            { id: 2, name: "Bob", email: "bob@gmail.com", active: false },
+            { id: 3, name: "Carol", email: "carol@gmail.com", active: true },
+            { id: 4, name: "Dan", email: "dan@gmail.com", active: false },
+        ];
+
+        $(document).ready(function () {
+
+            for (var i = 0; i < users.length; i++) {
+
+                $('#tblUsers tbody').append(`<tr>
+                                                <td>${users[i].id}</td>
+                                                <td>${users[i].name}</td>
+                                                <td>${users[i].email}</td>
+                                                <td>${users[i].active}</td>
+                                            </tr>`);
+
+            }
+        });
+
+
+
+    </script>
+</body>
+
+</html>

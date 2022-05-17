@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Asynchronous Test</h1>
+
+    <button id="btnTest">Press Me</button>
+    
+    <div id="messages">
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"
+    integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer">
+    </script>
+
+    <script>
+
+        function addMessage(message) {
+            $('#messages').append(`<div>${message}</div>`);
+        }
+
+        $('#btnTest').on("click", function() {
+
+            addMessage("clicked");
+
+        });
+
+        var url = "http://api.citybik.es/v2/networks/cork";
+
+        setTimeout(function() {
+            addMessage("***timeout callback called");
+        }, 5000);
+
+        setInterval(function() {
+            addMessage("interval callback called</div>");
+        }, 1000);
+
+        $.getJSON(url, function(data) {
+            addMessage("getJSON data received</div>");
+        });
+
+        addMessage("script finished</div>");
+    </script>
+</body>
+</html>

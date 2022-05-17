@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>CityBikes</h1>
+
+    <h2 id="title"></h2>
+
+    <select id="selStations" size="10"></select>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"
+        integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+        </script>
+
+    <script>
+
+        var url = "http://api.citybik.es/v2/networks/cork";
+
+        $(document).ready(function () {
+
+            // request info from citybikes
+            $.getJSON(url, function(data) {
+                console.log(data.network.name);
+
+                $('#title').html(data.network.name);
+
+                for (var i=0; i<data.network.stations.length; i++) {
+
+                    console.log(data.network.stations[i].name);
+
+                    $('#selStations').append(
+                        `<option>${data.network.stations[i].name}</option>`
+                    );
+                }
+
+            });
+
+            // display name in title h2 tag
+        });
+    </script>
+
+</body>
+
+</html>
