@@ -1,15 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        .dialog {
+            border: 1px solid black;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
+
 <body>
     <h1>User Management</h1>
 
-    <button>Add User</button>
+    <button id="btnAdd">Add User</button>
+
+    <div id="dlgAdd" class="dialog hidden">
+        <h2>Add User</h2>
+        <label>Name</label>
+        <input id="txtName"><br>
+        <label>Email</label>
+        <input id="txtEmail"><br>
+        <label>Active</label>
+        <input type="checkbox" id="chkActive"><br>
+
+        <button id="btnDialogSave">Save</button>
+        <button id="btnDialogCancel">Cancel</button>
+    </div>
+
+
     <table id="tblUsers">
         <thead>
             <tr>
@@ -23,8 +49,10 @@
         <tbody></tbody>
     </table>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous" referrerpolicy="no-referrer">
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"
+        integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+        </script>
 
     <script>
 
@@ -33,14 +61,16 @@
         function addUserToTable(user) {
 
             $('#tblUsers tbody').append(`
-                <tr id="tr_${ user.id }">
-                    <td>${ user.id }</td>
-                    <td>${ user.name }</td>
-                    <td>${ user.email }</td>
-                    <td>${ user.active ? "Active" : "Inactive" }</td>
+                <tr id="tr_${user.id}">
+                    <td>${user.id}</td>
+                    <td>${user.name}</td>
+                    <td>${user.email}</td>
+                    <td>${user.active ? "Active" : "Inactive"}</td>
                     <td>
-                        <button id="btnDelete_${ user.id }" class="btnDelete">Delete</button>
-                        <button id="btnEdit_${ user.id }" class="btnEdit">Edit</button>
+                        <button id="btnDelete_${user.id}" class="btnDelete">Delete</button>
+                        <button id="btnEdit_${user.id}" class="btnEdit">Edit</button>
+                        <button id="btnSave_${user.id}" class="btnSave">Save</button>
+                        <button id="btnCancel_${user.id}" class="btnCancel">Cancel</button>
                     </td>
                 </tr>
             `);
@@ -54,61 +84,153 @@
 
             return userId;
         }
-        
 
-        $(document).ready(function() {
+
+        $(document).ready(function () {
 
             // get the data from web service
-            $.getJSON(url, function(users) {
+            $.getJSON(url, function (users) {
 
                 users.forEach((user) => {
                     addUserToTable(user);
                 });
-
-                $(`.btnDelete`).on("click", function(evt) {
-                    
-                    var userId = getUserIdFromEvent(evt);
-
-                    if (confirm(`are you sure you want to delete user ${ userId }`)) {
-
-                    // make an ajax call to delete this user
-
-                        $.ajax({
-                            method: "DELETE", 
-                            url: `${ url }/${ userId }`, 
-
-                            success: function() {
-                                // remove this row from the table
-                                $(`#tr_${ userId }`).remove();
-                            }, 
-                            error: function(error) { 
-                                alert(error);
-                            }
-                        });
-
-
-
-
-                    }
-
-
-                    //console.log(userId);
-
-                    //alert (`clicked ${ userId }`);
-                });
-
-                $(`.btnEdit`).on("click", function(evt) {
-                    var userId = getUserIdFromEvent(evt);
-                    alert (`edit clicked - ${ userId }`);
-                });
             });
 
             // set up event handlers for controls etc.
+            $('#btnAdd').on("click", function () {
+                $('#txtName').val("");
+                $('#txtEmail').val("");
+                $('#chkActive').prop("checked", false);
+                
+                $('#dlgAdd').toggleClass('hidden');
+            });
 
+            $('#btnDialogSave').on("click", function () {
+                var name = $('#txtName').val();
+                var email = $('#txtEmail').val();
+                var active = $('#chkActive').prop("checked");
+
+                var newUser = {
+                    name: name,
+                    email: email,
+                    active: active
+                }
+
+                // alert(JSON.stringify(newUser));
+
+                // make and ajax call to create a new user
+
+                $.ajax({
+                    method: "POST",
+                    url: url,
+                    contentType: "application/json",
+                    data: JSON.stringify(newUser),
+
+                    success: function (addedUser) {
+                        addUserToTable(addedUser);
+                        $('#dlgAdd').addClass("hidden");
+                    },
+                    error: function (error) {
+                        alert(error);
+                    }
+                });
+            });
+
+            $('#btnDialogCancel').on("click", function () {
+                $('#dlgAdd').addClass('hidden');
+            });
+
+            //$(`.btnEdit`).on("click", function(evt) {
+            // add event handler for all items with btnEdit class
+            // even those that don't exist yet!!!                    
+            $(document).on("click", ".btnEdit", function (evt) {
+
+                var userId = getUserIdFromEvent(evt);
+
+                var originalName = $(`#tr_${ userId } td:nth-child(2)`).html();
+
+                $(`#tr_${ userId } td:nth-child(2)`)
+                    .html(`<input id="txtName_${ userId }" type="text" value="${ originalName }">`);
+
+                var tdEmail =  $(`#tr_${ userId } td:nth-child(3)`);
+                var originalEmail = tdEmail.html();
+                tdEmail.html(`<input id="txtEmail_${ userId }" type="text" value="${ originalEmail }">`);
+
+                var tdActive = $(`#tr_${ userId } td:nth-child(4)`);
+                var originalActive = tdActive.html() == "Active";
+
+                tdActive.html(`<input id="chkActive_${ userId }" type="checkbox" ${ originalActive ? "checked" : ""}>`)
+
+                
+                // alert(`edit clicked - ${userId}`);
+            });
+            //$(`.btnDelete`).on("click", function(evt) {
+            // add event handler for all items with btnDelete class
+            // even those that don't exist yet!!!
+            $(document).on("click", ".btnDelete", function (evt) {
+
+                var userId = getUserIdFromEvent(evt);
+
+                if (confirm(`are you sure you want to delete user ${userId}`)) {
+
+                    // make an ajax call to delete this user
+
+                    $.ajax({
+                        method: "DELETE",
+                        url: `${url}/${userId}`,
+
+                        success: function () {
+                            // remove this row from the table
+                            $(`#tr_${userId}`).remove();
+                        },
+                        error: function (error) {
+                            alert(error);
+                        }
+                    });
+                }
+            });
+
+
+            $(document).on("click", ".btnSave", function(evt) {
+                var userId = getUserIdFromEvent(evt);
+
+                var name = $(`#txtName_${ userId }`).val();
+                var email = $(`#txtEmail_${ userId }`).val();
+                var active = $(`#chkActive_${ userId }`).prop("checked");
+
+                var updatedUser = {
+                    name: name, 
+                    email: email, 
+                    active: active
+                }
+
+                $.ajax({
+                    method: "PUT", 
+                    url: `${ url }/${ userId }`, 
+                    data: JSON.stringify(updatedUser), 
+                    contentType: "application/json", 
+
+                    success: function() {
+                        alert("saved");
+                    }, 
+                    error: function(error) {
+                        alert(error)
+                    }
+
+
+                })
+
+            });
+
+            $(document).on("click", ".btnCancel", function(evt) {
+                var userId = getUserIdFromEvent(evt);
+                alert(`cancel ${ userId }`);
+            });
         })
 
 
     </script>
 
 </body>
+
 </html>
