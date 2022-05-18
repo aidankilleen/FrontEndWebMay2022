@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>User Management</h1>
+
+    <button>Add User</button>
+    <table id="tblUsers">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Active</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    </script>
+
+    <script>
+
+        let url = "https://jsonserver.completelyfreewebsite.com/users";
+
+        function addUserToTable(user) {
+
+            $('#tblUsers tbody').append(`
+                <tr id="tr_${ user.id }">
+                    <td>${ user.id }</td>
+                    <td>${ user.name }</td>
+                    <td>${ user.email }</td>
+                    <td>${ user.active ? "Active" : "Inactive" }</td>
+                    <td>
+                        <button id="btnDelete_${ user.id }" class="btnDelete">Delete</button>
+                        <button id="btnEdit_${ user.id }" class="btnEdit">Edit</button>
+                    </td>
+                </tr>
+            `);
+
+        }
+        function getUserIdFromEvent(evt) {
+
+            var id = evt.target.id;
+            var pieces = id.split("_");
+            var userId = pieces[1];
+
+            return userId;
+        }
+        
+
+        $(document).ready(function() {
+
+            // get the data from web service
+            $.getJSON(url, function(users) {
+
+                users.forEach((user) => {
+                    addUserToTable(user);
+                });
+
+                $(`.btnDelete`).on("click", function(evt) {
+                    
+                    var userId = getUserIdFromEvent(evt);
+
+                    if (confirm(`are you sure you want to delete user ${ userId }`)) {
+
+                    // make an ajax call to delete this user
+
+                        $.ajax({
+                            method: "DELETE", 
+                            url: `${ url }/${ userId }`, 
+
+                            success: function() {
+                                // remove this row from the table
+                                $(`#tr_${ userId }`).remove();
+                            }, 
+                            error: function(error) { 
+                                alert(error);
+                            }
+                        });
+
+
+
+
+                    }
+
+
+                    //console.log(userId);
+
+                    //alert (`clicked ${ userId }`);
+                });
+
+                $(`.btnEdit`).on("click", function(evt) {
+                    var userId = getUserIdFromEvent(evt);
+                    alert (`edit clicked - ${ userId }`);
+                });
+            });
+
+            // set up event handlers for controls etc.
+
+        })
+
+
+    </script>
+
+</body>
+</html>
