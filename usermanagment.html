@@ -69,12 +69,11 @@
                     <td>
                         <button id="btnDelete_${user.id}" class="btnDelete">Delete</button>
                         <button id="btnEdit_${user.id}" class="btnEdit">Edit</button>
-                        <button id="btnSave_${user.id}" class="btnSave">Save</button>
-                        <button id="btnCancel_${user.id}" class="btnCancel">Cancel</button>
+                        <button id="btnSave_${user.id}" class="btnSave" disabled>Save</button>
+                        <button id="btnCancel_${user.id}" class="btnCancel" disabled>Cancel</button>
                     </td>
                 </tr>
             `);
-
         }
         function getUserIdFromEvent(evt) {
 
@@ -85,6 +84,20 @@
             return userId;
         }
 
+        function configureButtons(userId, edit) {
+
+            if (edit) {
+                // configure the buttons for edit mode
+                $(`#btnSave_${ userId }`).attr("disabled", false);
+                $(`#btnCancel_${ userId }`).attr("disabled", false);
+                $(`#btnEdit_${ userId }`).attr("disabled", true);
+            } else {
+                // configure the buttons for view mode
+                $(`#btnSave_${ userId }`).attr("disabled", true);
+                $(`#btnCancel_${ userId }`).attr("disabled", true);
+                $(`#btnEdit_${ userId }`).attr("disabled", false);
+            }
+        }
         //var users;
 
         $(document).ready(function () {
@@ -104,7 +117,7 @@
                 $('#txtName').val("");
                 $('#txtEmail').val("");
                 $('#chkActive').prop("checked", false);
-                
+
                 $('#dlgAdd').toggleClass('hidden');
             });
 
@@ -151,34 +164,38 @@
 
                 var userId = getUserIdFromEvent(evt);
 
-                var originalName = $(`#tr_${ userId } td:nth-child(2)`).html();
+                var originalName = $(`#tr_${userId} td:nth-child(2)`).html();
 
-                $(`#tr_${ userId } td:nth-child(2)`)
+                $(`#tr_${userId} td:nth-child(2)`)
                     .html(`<input 
-                            id="txtName_${ userId }" 
+                            id="txtName_${userId}" 
                             type="text" 
-                            value="${ originalName }"
-                            data-original-value= "${ originalName }">`);
+                            value="${originalName}"
+                            data-original-value= "${originalName}">`);
 
-                var tdEmail =  $(`#tr_${ userId } td:nth-child(3)`);
+                var tdEmail = $(`#tr_${userId} td:nth-child(3)`);
                 var originalEmail = tdEmail.html();
                 tdEmail.html(`<input 
-                                id="txtEmail_${ userId }" 
+                                id="txtEmail_${userId}" 
                                 type="text" 
-                                value="${ originalEmail }"
-                                data-original-value= "${ originalEmail }"
+                                value="${originalEmail}"
+                                data-original-value= "${originalEmail}"
                                 >`);
 
-                var tdActive = $(`#tr_${ userId } td:nth-child(4)`);
+                var tdActive = $(`#tr_${userId} td:nth-child(4)`);
                 var originalActive = tdActive.html() == "Active";
 
                 tdActive.html(`<input 
-                                id="chkActive_${ userId }" 
-                                type="checkbox" ${ originalActive ? "checked" : ""}
-                                data-original-value= "${ originalActive }"
+                                id="chkActive_${userId}" 
+                                type="checkbox" ${originalActive ? "checked" : ""}
+                                data-original-value= "${originalActive}"
                                 >`)
 
-                
+                configureButtons(userId, true);
+
+
+
+
                 // alert(`edit clicked - ${userId}`);
             });
             //$(`.btnDelete`).on("click", function(evt) {
@@ -207,56 +224,61 @@
                 }
             });
 
-
-            $(document).on("click", ".btnSave", function(evt) {
+            $(document).on("click", ".btnSave", function (evt) {
                 var userId = getUserIdFromEvent(evt);
 
-                var name = $(`#txtName_${ userId }`).val();
-                var email = $(`#txtEmail_${ userId }`).val();
-                var active = $(`#chkActive_${ userId }`).prop("checked");
+                var name = $(`#txtName_${userId}`).val();
+                var email = $(`#txtEmail_${userId}`).val();
+                var active = $(`#chkActive_${userId}`).prop("checked");
                 var updatedUser = {
-                    name: name, 
-                    email: email, 
+                    name: name,
+                    email: email,
                     active: active
                 }
 
                 $.ajax({
-                    method: "PUT", 
-                    url: `${ url }/${ userId }`, 
-                    data: JSON.stringify(updatedUser), 
-                    contentType: "application/json", 
+                    method: "PUT",
+                    url: `${url}/${userId}`,
+                    data: JSON.stringify(updatedUser),
+                    contentType: "application/json",
 
-                    success: function() {
-                        var tdName =  $(`#tr_${ userId } td:nth-child(2)`);
-                        tdName.html(`${ updatedUser.name }`);
-                        var tdEmail =  $(`#tr_${ userId } td:nth-child(3)`);
-                        tdEmail.html(`${ updatedUser.email }`);
-                        var tdActive =  $(`#tr_${ userId } td:nth-child(4)`);
-                        tdActive.html(`${ updatedUser.active ? "Active" : "Inactive" }`);
-                    }, 
-                    error: function(error) {
+                    success: function () {
+                        var tdName = $(`#tr_${userId} td:nth-child(2)`);
+                        tdName.html(`${updatedUser.name}`);
+                        var tdEmail = $(`#tr_${userId} td:nth-child(3)`);
+                        tdEmail.html(`${updatedUser.email}`);
+                        var tdActive = $(`#tr_${userId} td:nth-child(4)`);
+                        tdActive.html(`${updatedUser.active ? "Active" : "Inactive"}`);
+
+                        configureButtons(userId, false);
+
+                    },
+                    error: function (error) {
                         alert(error)
                     }
                 })
 
             });
 
-            $(document).on("click", ".btnCancel", function(evt) {
+            $(document).on("click", ".btnCancel", function (evt) {
                 var userId = getUserIdFromEvent(evt);
 
-                var originalName = $(`#txtName_${ userId }`).attr("data-original-value");
-                var tdName =  $(`#tr_${ userId } td:nth-child(2)`);
-                tdName.html(`${ originalName }`);
+                var originalName = $(`#txtName_${userId}`).attr("data-original-value");
+                var tdName = $(`#tr_${userId} td:nth-child(2)`);
+                tdName.html(`${originalName}`);
 
-                var originalEmail = $(`#txtEmail_${ userId }`).attr("data-original-value");
-                var tdEmail =  $(`#tr_${ userId } td:nth-child(3)`);
-                tdEmail.html(`${ originalEmail }`);
+                var originalEmail = $(`#txtEmail_${userId}`).attr("data-original-value");
+                var tdEmail = $(`#tr_${userId} td:nth-child(3)`);
+                tdEmail.html(`${originalEmail}`);
 
-                var originalActive = $(`#chkActive_${ userId }`).attr("data-original-value") == "true";
-                var tdActive =  $(`#tr_${ userId } td:nth-child(4)`);
-                tdActive.html(`${ originalActive ? "Active": "Inactive" }`);
+                var originalActive = $(`#chkActive_${userId}`).attr("data-original-value") == "true";
+                var tdActive = $(`#tr_${userId} td:nth-child(4)`);
+                tdActive.html(`${originalActive ? "Active" : "Inactive"}`);
+
+                configureButtons(userId, false);
             });
         })
     </script>
 </body>
+
 </html>
