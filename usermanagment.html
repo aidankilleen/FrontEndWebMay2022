@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" />
+
     <title>Document</title>
     <style>
         .dialog {
@@ -20,23 +23,40 @@
 <body>
     <h1>User Management</h1>
 
-    <button id="btnAdd">Add User</button>
+    <!-- Button trigger modal -->
+    <button 
+        type="button" 
+        class="btn btn-primary" 
+        data-bs-toggle="modal" 
+        data-bs-target="#addUserModal">
+        New User
+    </button>
 
-    <div id="dlgAdd" class="dialog hidden">
-        <h2>Add User</h2>
-        <label>Name</label>
-        <input id="txtName"><br>
-        <label>Email</label>
-        <input id="txtEmail"><br>
-        <label>Active</label>
-        <input type="checkbox" id="chkActive"><br>
-
-        <button id="btnDialogSave">Save</button>
-        <button id="btnDialogCancel">Cancel</button>
+    <!-- Modal -->
+    <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add User</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label>Name</label>
+                    <input id="txtName"><br>
+                    <label>Email</label>
+                    <input id="txtEmail"><br>
+                    <label>Active</label>
+                    <input type="checkbox" id="chkActive"><br>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button id="btnDialogSave" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
+                </div>
+            </div>
+        </div>
     </div>
 
-
-    <table id="tblUsers">
+    <table id="tblUsers" class="table">
         <thead>
             <tr>
                 <th>Id</th>
@@ -54,6 +74,14 @@
         crossorigin="anonymous" referrerpolicy="no-referrer">
         </script>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js">
+    </script>
+
+    <script>
+        // enable tooltips in bootstrap library
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+    </script>
     <script>
 
         let url = "https://jsonserver.completelyfreewebsite.com/users";
@@ -67,10 +95,10 @@
                     <td>${user.email}</td>
                     <td>${user.active ? "Active" : "Inactive"}</td>
                     <td>
-                        <button id="btnDelete_${user.id}" class="btnDelete">Delete</button>
-                        <button id="btnEdit_${user.id}" class="btnEdit">Edit</button>
-                        <button id="btnSave_${user.id}" class="btnSave" disabled>Save</button>
-                        <button id="btnCancel_${user.id}" class="btnCancel" disabled>Cancel</button>
+                        <button id="btnDelete_${user.id}" class="btnDelete btn btn-danger btn-sm">Delete</button>
+                        <button id="btnEdit_${user.id}" class="btnEdit btn btn-secondary btn-sm">Edit</button>
+                        <button id="btnSave_${user.id}" class="btnSave btn btn-success btn-sm" disabled>Save</button>
+                        <button id="btnCancel_${user.id}" class="btnCancel btn btn-warning btn-sm" disabled>Cancel</button>
                     </td>
                 </tr>
             `);
@@ -88,14 +116,14 @@
 
             if (edit) {
                 // configure the buttons for edit mode
-                $(`#btnSave_${ userId }`).attr("disabled", false);
-                $(`#btnCancel_${ userId }`).attr("disabled", false);
-                $(`#btnEdit_${ userId }`).attr("disabled", true);
+                $(`#btnSave_${userId}`).attr("disabled", false);
+                $(`#btnCancel_${userId}`).attr("disabled", false);
+                $(`#btnEdit_${userId}`).attr("disabled", true);
             } else {
                 // configure the buttons for view mode
-                $(`#btnSave_${ userId }`).attr("disabled", true);
-                $(`#btnCancel_${ userId }`).attr("disabled", true);
-                $(`#btnEdit_${ userId }`).attr("disabled", false);
+                $(`#btnSave_${userId}`).attr("disabled", true);
+                $(`#btnCancel_${userId}`).attr("disabled", true);
+                $(`#btnEdit_${userId}`).attr("disabled", false);
             }
         }
         //var users;
@@ -113,14 +141,6 @@
             });
 
             // set up event handlers for controls etc.
-            $('#btnAdd').on("click", function () {
-                $('#txtName').val("");
-                $('#txtEmail').val("");
-                $('#chkActive').prop("checked", false);
-
-                $('#dlgAdd').toggleClass('hidden');
-            });
-
             $('#btnDialogSave').on("click", function () {
                 var name = $('#txtName').val();
                 var email = $('#txtEmail').val();
