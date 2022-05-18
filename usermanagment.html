@@ -85,11 +85,14 @@
             return userId;
         }
 
+        //var users;
 
         $(document).ready(function () {
 
             // get the data from web service
             $.getJSON(url, function (users) {
+
+                //users = usersFromService;
 
                 users.forEach((user) => {
                     addUserToTable(user);
@@ -128,6 +131,7 @@
 
                     success: function (addedUser) {
                         addUserToTable(addedUser);
+                        //users.push(addedUser);
                         $('#dlgAdd').addClass("hidden");
                     },
                     error: function (error) {
@@ -150,16 +154,29 @@
                 var originalName = $(`#tr_${ userId } td:nth-child(2)`).html();
 
                 $(`#tr_${ userId } td:nth-child(2)`)
-                    .html(`<input id="txtName_${ userId }" type="text" value="${ originalName }">`);
+                    .html(`<input 
+                            id="txtName_${ userId }" 
+                            type="text" 
+                            value="${ originalName }"
+                            data-original-value= "${ originalName }">`);
 
                 var tdEmail =  $(`#tr_${ userId } td:nth-child(3)`);
                 var originalEmail = tdEmail.html();
-                tdEmail.html(`<input id="txtEmail_${ userId }" type="text" value="${ originalEmail }">`);
+                tdEmail.html(`<input 
+                                id="txtEmail_${ userId }" 
+                                type="text" 
+                                value="${ originalEmail }"
+                                data-original-value= "${ originalEmail }"
+                                >`);
 
                 var tdActive = $(`#tr_${ userId } td:nth-child(4)`);
                 var originalActive = tdActive.html() == "Active";
 
-                tdActive.html(`<input id="chkActive_${ userId }" type="checkbox" ${ originalActive ? "checked" : ""}>`)
+                tdActive.html(`<input 
+                                id="chkActive_${ userId }" 
+                                type="checkbox" ${ originalActive ? "checked" : ""}
+                                data-original-value= "${ originalActive }"
+                                >`)
 
                 
                 // alert(`edit clicked - ${userId}`);
@@ -197,7 +214,6 @@
                 var name = $(`#txtName_${ userId }`).val();
                 var email = $(`#txtEmail_${ userId }`).val();
                 var active = $(`#chkActive_${ userId }`).prop("checked");
-
                 var updatedUser = {
                     name: name, 
                     email: email, 
@@ -211,26 +227,36 @@
                     contentType: "application/json", 
 
                     success: function() {
-                        alert("saved");
+                        var tdName =  $(`#tr_${ userId } td:nth-child(2)`);
+                        tdName.html(`${ updatedUser.name }`);
+                        var tdEmail =  $(`#tr_${ userId } td:nth-child(3)`);
+                        tdEmail.html(`${ updatedUser.email }`);
+                        var tdActive =  $(`#tr_${ userId } td:nth-child(4)`);
+                        tdActive.html(`${ updatedUser.active ? "Active" : "Inactive" }`);
                     }, 
                     error: function(error) {
                         alert(error)
                     }
-
-
                 })
 
             });
 
             $(document).on("click", ".btnCancel", function(evt) {
                 var userId = getUserIdFromEvent(evt);
-                alert(`cancel ${ userId }`);
+
+                var originalName = $(`#txtName_${ userId }`).attr("data-original-value");
+                var tdName =  $(`#tr_${ userId } td:nth-child(2)`);
+                tdName.html(`${ originalName }`);
+
+                var originalEmail = $(`#txtEmail_${ userId }`).attr("data-original-value");
+                var tdEmail =  $(`#tr_${ userId } td:nth-child(3)`);
+                tdEmail.html(`${ originalEmail }`);
+
+                var originalActive = $(`#chkActive_${ userId }`).attr("data-original-value") == "true";
+                var tdActive =  $(`#tr_${ userId } td:nth-child(4)`);
+                tdActive.html(`${ originalActive ? "Active": "Inactive" }`);
             });
         })
-
-
     </script>
-
 </body>
-
 </html>
