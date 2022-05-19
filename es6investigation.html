@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <script>
+
+        // ES6 feature 
+        // let keyword
+        // creates variables that follow the "normal" scoping rules
+        // use instead of var.
+
+        function someFunction() {
+
+            var name;
+
+            if (true) {
+
+                //var v2 = 9;
+                let v2 = 9;
+                v2 = 9;
+            }
+            console.log(`v2=${v2}`);
+        }
+        // someFunction();
+
+        // ES6 Feature - const
+        function testConst() {
+            const pi = 3.14159;
+            pi = 4;
+            console.log(`pi = ${pi}`);
+
+        }
+        //testFunction();
+
+
+        // ES6 Feature - destructuring
+
+        function testDestructuring() {
+            const list = [1, 2, 3, 4];
+            let [a, b, c, d] = list;
+            console.log(a, b, c, d);
+        }
+
+        // testDestructuring();
+
+        // ES6 Feature - destructuring with spread operator
+        function testDestructuringWithSpread() {
+            const list = [1, 2, 3, 4, 5, 6, 7, 8];
+            let [a, b, ...rest] = list;
+            console.log(a, b, rest);
+        }
+
+        //testDestructuringWithSpread();
+
+
+        function testDestructuringAnObject() {
+
+            const o = {
+                id: 1,
+                name: "Aidan",
+                email: "aidan@gmail.com",
+                active: false
+            }
+            const { id, name, ...rest } = o;
+
+            console.log(`id=${id} name=${name}`);
+            console.log(rest);
+        }
+
+        // testDestructuringAnObject();
+
+        function swapUsingDestructuring() {
+
+            let a = 99;
+            let b = 100;
+
+            console.log(`a = ${a} b = ${b}`);
+            [a, b] = [b, a];
+            console.log(`a = ${a} b = ${b}`);
+
+        }
+
+        //swapUsingDestructuring();
+
+
+        function someTemplateLiteralExamples() {
+
+            let a = 100;
+            let b = 99;
+
+            let message = `a = ${a} b = ${b} sum= ${a + b}`;
+            console.log(message);
+
+            let today = new Date();
+
+            today = new Date(2022, 11, 1);
+
+            console.log(today);
+
+            console.log(today.getMonth());
+
+            console.log(today.getDate());
+
+            console.log(today.getFullYear());
+
+            let day = today.getDate();
+            let month = today.getMonth() + 1;
+            let year = today.getFullYear();
+
+            // get date in yyyy-mm-dd format
+
+            let twoDigitMonth = `${('0' + month).slice(-2)}`;
+            console.log(twoDigitMonth);
+
+            let date = `${year}-${('0' + month).slice(-2)}-${('0' + day).slice(-2)}`;
+            console.log(date);
+        }
+        //someTemplateLiteralExamples();
+
+
+        function fatArrowTest() {
+            const numbers = [7, 2, 5, 4, 2, 8, 6, 9, 5, 10];
+
+
+            numbers.forEach(number => {
+                // only print out even numbers
+                if (number % 2 == 0) {
+                    console.log(number);
+                }
+            });
+
+            const evenNumbers = numbers.filter(number => number % 2 == 0);
+
+            console.log(evenNumbers);
+
+        }
+
+
+        function filterListOfObjects() {
+
+            const users = [
+                { id:1, name:"Alice", email:"alice@gmail.com", active:true }, 
+                { id:2, name:"Bob", email:"bob@gmail.com", active:false }, 
+                { id:3, name:"Carol", email:"carol@gmail.com", active:true }, 
+                { id:4, name:"Dan", email:"dan@gmail.com", active:false }, 
+                { id:5, name:"Eve", email:"eve@gmail.com", active:true }, 
+                { id:6, name:"Fred", email:"fred@gmail.com", active:false }, 
+                { id:7, name:"Ger", email:"ger@gmail.com", active:false }, 
+            ];
+
+            users.filter(user => user.active)
+                 .forEach(user=>console.log(user));
+
+
+
+            
+            
+        }
+
+        //filterListOfObjects();
+
+
+        function testSorting() {
+
+            let list = ["pineapple", "Strawberry", "Apple", "Carrot", "banana", "cherry"];
+
+            let numbers = [8, 18, 20, 17, 15, 14, 4, 3, 2, 6, 7, 5, 9, 10, 3];
+
+            let sortedNumbers = numbers.sort((a, b) => a - b);
+
+            numbers.filter(number => number % 2 == 0)
+                    .sort((a, b) => b - a)
+                    .forEach(number => console.log(number));
+
+            list.sort((a, b) => {
+                return a.localeCompare(b);
+            });
+
+            console.log(list);
+
+
+            //console.log(sortedNumbers);
+
+        }
+        // testSorting();
+
+        class User {
+            constructor(id, name, email, active) {
+                this.id = id;
+                this.name = name;
+                this.email = email;
+                this.active = active;
+            }
+            display() {
+                console.log(`id:${ this.id } 
+name: ${ this.name }
+email: ${ this.email }
+active: ${ this.active ? 'yes' : 'no'}
+                    `);
+            }
+        }
+        let user = new User(1, "Alice", "alice@gmail.com", false);
+        user.display();
+
+        console.log(user.name);
+
+
+
+    </script>
+</body>
+
+</html>
