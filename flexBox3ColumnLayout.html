@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .body {
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+        }
+
+        .header {
+            flex: 20vh 1 1;
+            background-color: lightgreen;
+        }
+        .container {
+            display: flex;
+            flex-direction: row;
+
+
+
+            flex: 70vh 1 1;
+        }
+        .left {
+            flex: 150px 0 0;
+            background-color: lightcoral;
+            border: 1px solid black;
+        }
+        .main {
+            flex: 70% 1 1;
+            background-color: lightgray;
+        }
+        .right {
+            flex: 30% 1 1;
+            background-color: lightblue;
+        }
+        .footer {
+            flex: 10vh 1 1;
+            background-color: lightgreen;
+        }
+
+        @media (max-width: 768px) {
+
+            .header {
+                flex-basis: auto;
+            }
+            .left {
+                flex-basis: auto;
+            }
+            .container {
+                flex-direction: column;
+                flex: auto 1 1;
+            }
+            .right {
+                flex: auto 1 1;
+            }
+            .footer {
+                flex-basis: auto;
+            }
+
+        } 
+
+
+    </style>
+</head>
+<body class="body">
+    
+    <header class="header">Header</header>
+    <div class="container">
+        <aside class="left">Left</aside>
+        <main class="main">
+            <h1>Main</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti voluptatum odit, libero similique officiis eum sint necessitatibus nobis eius aut eligendi dicta ea inventore! Nisi nobis eius eum. Dignissimos, ipsum!</p>
+            <p>Aperiam omnis consectetur qui vitae tenetur ad illum mollitia, deserunt ratione repudiandae optio nisi aliquam distinctio! Facilis, libero iure corporis qui voluptatibus ea, hic velit laudantium quos illum, sequi molestias.</p>
+            <p>Sint, recusandae corrupti adipisci aperiam dolorem itaque dignissimos quia fugiat excepturi, amet facere cum veritatis vel. Eum, rerum consectetur eaque omnis saepe id aliquid quae vero dicta iure, optio ullam!</p>
+            <p>Laborum, ducimus. Optio vero veritatis, porro dicta beatae obcaecati earum autem, excepturi atque cupiditate fugiat tempora minus error velit mollitia deleniti. Accusamus, consequuntur? Quo labore et ipsum sit quisquam voluptatem?</p>
+            <p>Soluta provident amet delectus, et eveniet expedita, veritatis rerum corporis deleniti vitae consequatur quisquam animi nemo nesciunt nobis voluptate maxime molestias enim cumque quae, officiis pariatur alias numquam non? Atque.</p>
+            <p>Totam est veritatis incidunt velit sint impedit voluptatibus dolore veniam ad, hic ex esse, obcaecati, ratione debitis nihil rem fuga vel odio voluptate! Doloremque natus ullam, at repellat vero corporis.</p>
+
+        </main>
+        <aside class="right">Right</aside>
+    </div>
+    <footer class="footer">Footer</footer>    
+
+</body>
+</html>
