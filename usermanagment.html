@@ -5,23 +5,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" />
 
-    <title>Document</title>
-    <style>
-        .dialog {
-            border: 1px solid black;
-        }
-
-        .hidden {
-            display: none;
-        }
-    </style>
+    <title>User Management Website</title>
 </head>
 
 <body>
     <h1>User Management</h1>
+
+    <input id="txtCount">
+
 
     <!-- Button trigger modal -->
     <button 
@@ -56,6 +49,48 @@
         </div>
     </div>
 
+
+    <button 
+        type="button" 
+        class="btn btn-primary" 
+        data-bs-toggle="modal" 
+        data-bs-target="#confirmChoiceModal">
+        Test confirm modal
+    </button>
+
+    <script>
+        var modalResult="";
+    </script>
+    
+    <div class="modal fade" id="confirmChoiceModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="confirmMessage"></p>
+                </div>
+                <div class="modal-footer">
+                    <button 
+                        type="button" 
+                        class="btn btn-secondary" 
+                        data-bs-dismiss="modal"
+                        onclick="modalResult='cancel'">Cancel</button>
+                    <button 
+                        id="btnConfirmOk" 
+                        class="btn btn-primary" 
+                        data-bs-dismiss="modal" 
+                        onclick="modalResult='ok'" >
+                        Ok
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <table id="tblUsers" class="table">
         <thead>
             <tr>
@@ -85,6 +120,7 @@
     <script>
 
         let url = "https://jsonserver.completelyfreewebsite.com/users";
+        var count = 0;
 
         function addUserToTable(user) {
 
@@ -130,6 +166,12 @@
 
         $(document).ready(function () {
 
+            setInterval(()=>{
+                $('#txtCount').val(`${ count++ }`);
+            }, 500);
+
+
+
             // get the data from web service
             $.getJSON(url, function (users) {
 
@@ -152,10 +194,7 @@
                     active: active
                 }
 
-                // alert(JSON.stringify(newUser));
-
-                // make and ajax call to create a new user
-
+                // make an ajax call to create a new user
                 $.ajax({
                     method: "POST",
                     url: url,
@@ -212,11 +251,6 @@
                                 >`)
 
                 configureButtons(userId, true);
-
-
-
-
-                // alert(`edit clicked - ${userId}`);
             });
             //$(`.btnDelete`).on("click", function(evt) {
             // add event handler for all items with btnDelete class
@@ -225,23 +259,31 @@
 
                 var userId = getUserIdFromEvent(evt);
 
-                if (confirm(`are you sure you want to delete user ${userId}`)) {
+                $('#confirmMessage').html(`Delete user ${ userId }`);
+                modalResult = "cancel";
+                const myModal = new bootstrap.Modal('#confirmChoiceModal', {});
+                myModal.show();
 
-                    // make an ajax call to delete this user
+                $("#confirmChoiceModal").off('hidden.bs.modal');
+                $("#confirmChoiceModal").on('hidden.bs.modal', function() {
 
-                    $.ajax({
-                        method: "DELETE",
-                        url: `${url}/${userId}`,
+                    if (modalResult == "ok") {
+                        // do the delete
+                        // make an ajax call to delete this user
+                        $.ajax({
+                            method: "DELETE",
+                            url: `${url}/${userId}`,
 
-                        success: function () {
-                            // remove this row from the table
-                            $(`#tr_${userId}`).remove();
-                        },
-                        error: function (error) {
-                            alert(error);
-                        }
-                    });
-                }
+                            success: function () {
+                                // remove this row from the table
+                                $(`#tr_${userId}`).remove();
+                            },
+                            error: function (error) {
+                                alert(error);
+                            }
+                        });
+                    } 
+                });
             });
 
             $(document).on("click", ".btnSave", function (evt) {
