@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" />
+
+    <style>
+
+        :root {
+            --colour-scheme-main: lightgray;
+            --colour-scheme-secondary: purple;
+        }
+        .heading {
+            background-color: var(--colour-scheme-main);
+        }
+        .left {
+            background-color: var(--colour-scheme-secondary);
+        }
+        .right {
+            background-color: var(--colour-scheme-secondary);
+        }
+        .footer {
+            background-color: var(--colour-scheme-main);
+        }
+
+    </style>
+</head>
+<body>
+    
+    <h1>Bootstrap Grid Investigation</h1>
+
+    <div class="container">
+        <div class="row heading">
+            <div class="col text-center">
+                Heading
+            </div>
+
+        <div class="row">
+
+            <div class="left col-sm-12 col-md-3">Left</div>
+
+            <div class="main col-sm-12 col-md-7">Main</div>
+
+            <div class="right col-sm-12 col-md-2">Right</div>
+    
+        </div>
+
+        <div class="footer row">Footer</div>
+
+    </div>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"
+    integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer">
+    </script>
+</body>
+</html>
