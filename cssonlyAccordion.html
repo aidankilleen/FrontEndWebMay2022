@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .accordion .accordion-item p {
+            display: none;
+        }
+        .accordion .accordion-item input[type="radio"]:checked~label {
+            background-color: lightblue;
+        } 
+        .accordion .accordion-item input[type="radio"]:checked~p {
+            display: block;
+        } 
+        .accordion-item input[type="radio"] {
+            display: none;
+        }
+        .accordion-item label {
+            background-color: lightgreen;
+            font-size: 2em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>CSS Only Accordion</h1>
+
+    <div class="accordion">
+        <div class="accordion-item">
+            <input id="accordion-item-1" type="radio" name="accordion" checked>
+            <label for="accordion-item-1">Item 1</label>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam veniam facilis praesentium iure delectus
+                dicta, voluptatem in voluptatum nisi asperiores, quo ipsum minus quia accusantium dolorem aut facere.
+                Suscipit, earum?</p>
+        </div>
+        <div class="accordion-item">
+            <input id="accordion-item-2" type="radio" name="accordion">
+            <label for="accordion-item-2">Item 2</label>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam veniam facilis praesentium iure delectus
+                dicta, voluptatem in voluptatum nisi asperiores, quo ipsum minus quia accusantium dolorem aut facere.
+                Suscipit, earum?</p>
+        </div>
+        <div class="accordion-item">
+            <input id="accordion-item-3" type="radio" name="accordion">
+            <label for="accordion-item-3">Item 3</label>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam veniam facilis praesentium iure delectus
+                dicta, voluptatem in voluptatum nisi asperiores, quo ipsum minus quia accusantium dolorem aut facere.
+                Suscipit, earum?</p>
+        </div>
+    </div>
+
+</body>
+
+</html>
