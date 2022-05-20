@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Promise Investigation</h1>
+
+    <button id="btnTest">Press Me</button>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    </script>
+
+    <script>
+        /*
+        $(document).ready(()=>{
+
+            $('#btnTest').on("click", () => {
+                setTimeout(()=>{
+                    alert("timeout elapsed");
+                }, 5000);
+            });
+        });
+        */
+
+        function doAsynchronousOperation() {
+            let p = new Promise((resolve, reject)=>{
+                setTimeout(()=>{
+                    if (Math.random()<0.7) {
+                        resolve();
+
+                    } else {
+                        reject();
+                    }
+                }, 3000);
+            });
+            return p;
+        }
+
+        doAsynchronousOperation()
+            .then(()=>{
+                console.log("asynchronous operation completed successfully");
+            })
+            .catch(()=>{
+                console.log("asynchronous operation failed");
+            });
+
+
+        console.log("creating promise");
+
+        let p = new Promise(function(resolve, reject) {
+            console.log("promise constructor called");
+            // do some asynchronous operation
+            setTimeout(()=>{
+                console.log("timeout elapsed");
+                // asynchronous operation is complete here
+                if (Math.random() < 0.8) {
+                    console.log("resolving promise");
+                    resolve();
+                } else {
+                    console.log("rejecting promise");
+                    reject();
+                }
+            }, 3000);
+        });
+
+        p.then(()=>{
+            console.log("promise resolved successfully");
+        }).catch(()=>{
+            console.log("promise was rejected");
+        })
+
+
+
+    </script>
+
+</body>
+</html>

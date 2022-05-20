@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Reduce Operation</h1>
+
+    <table id="tblResults">
+        <thead>
+            <tr>
+                <th>Colour</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    
+    <!--
+    <table id="tblRecords">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Colour</th>
+                <th>Name</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    </script>
+    <script>
+        let url = "https://jsonserver.completelyfreewebsite.com/records";
+        fetch(url).then(response=>response.json())
+        .then(records=>{
+            //let rows = records.map(record=>`<tr><td>${ record.id }</td><td>${ record.colour }</td><td>${ record.name }</td><td>${ record.quantity }</td></tr>`);
+
+            //$('#tblRecords tbody').append(rows);
+
+            let results = records.reduce((runningTotal, record) => {
+
+                if (runningTotal[record.colour] == null) {
+                    // first record with this colour
+                    runningTotal[record.colour] = record.quantity;
+                } else {
+                    // increment existing counter for this colour
+                    runningTotal[record.colour] += record.quantity;
+                }
+                return runningTotal;
+            }, {});
+
+            let colours = Object.keys(results);
+            colours.forEach(colour => {
+                $('#tblResults tbody').append(`<tr><td>${ colour }</td><td>${ results[colour] }</td></tr>`)
+            });
+
+            console.log(result);
+
+
+
+
+        });
+
+
+
+    </script>
+
+</body>
+</html>
